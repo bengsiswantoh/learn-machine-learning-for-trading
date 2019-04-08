@@ -1,11 +1,13 @@
 import pandas as pd
 
+def get_max_close(symbol):
+  df = pd.read_csv("data/{}.csv".format(symbol))
+  return df["Close"].max()
+
 def test_run():
-  df = pd.read_csv("data/INDF.JK.csv")
-  # print(df)
-  # print(df.head())
-  # print(df.tail())
-  print(df[10:21])
+  for symbol in ["BBRI.JK" ,"INDF.JK"]:
+    print("Max Close")
+    print(symbol, get_max_close(symbol))
 
 if __name__ == "__main__":
   test_run()

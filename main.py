@@ -18,10 +18,9 @@ def test_run():
     na_values=["nan"])
 
   # Join the two dataframes using DataFrame.join()
-  df1 = df1.join(dfINDF)
+  df1 = df1.join(dfINDF, how = "inner")
 
-  # # Drop NaN Values
-  df1 = df1.dropna()
+  # Drop NaN Values
   print(df1)
 
 if __name__ == "__main__":

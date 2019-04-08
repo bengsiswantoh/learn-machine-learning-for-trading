@@ -2,10 +2,27 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def test_run():
-  start_date = "2018-01-01"
-  end_date = "2018-01-30"
+  # Define date range
+  start_date = "2019-01-01"
+  end_date = "2019-04-01"
   dates = pd.date_range(start_date, end_date)
+
+  # Create an empty dataframe
   df1 = pd.DataFrame(index = dates)
+
+  # Read INDF data into temporary dataframe
+  dfINDF = pd.read_csv("data/INDF.JK.csv",
+    index_col = "Date",
+    parse_dates = True,
+    usecols=["Date", "Adj Close"],
+    na_values=["nan"])
+
+  # Join the two dataframes using DataFrame.join()
+  df1 = df1.join(dfINDF)
+
+  # # Drop NaN Values
+  df1 = df1.dropna()
+  print(df1)
 
 if __name__ == "__main__":
   test_run()

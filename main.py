@@ -25,6 +25,18 @@ def get_data(symbols, dates):
 
   return df
 
+def normalize_data(df):
+  return df / df.ix[0,:]
+
+def plot_data(df, title = "Stock prices"):
+  ax = df.plot(title = title, fontsize = 2)
+  ax.set_xlabel("Date")
+  ax.set_ylabel("Price")
+  plt.show()
+
+def plot_selected(df, columns, start_index, end_index):
+  plot_data(normalize_data(df.ix[start_index:end_index, columns]))
+
 def test_run():
   # Define date range
   start_date = "2018-01-01"
@@ -35,15 +47,7 @@ def test_run():
 
   df = get_data(symbols, dates)
 
-  # Slice by row range (dates) using DataFrame.ix[] selector
-  # print(df.ix["2018-01-01":"2018-01-30"])
-
-  # Slice by column (symbols)
-  # print(df["INDF.JK"])
-  # print(df[["BBRI.JK", "INDF.JK"]])
-
-  # Slice by row and column
-  print(df.ix["2018-01-01":"2018-01-30", ["BBRI.JK", "INDF.JK"]])
+  plot_selected(df, ["BBRI.JK", "INDF.JK"], "2019-01-01", "2019-04-01")
 
 if __name__ == "__main__":
   test_run()

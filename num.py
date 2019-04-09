@@ -1,8 +1,8 @@
 import numpy as np
 
 def test_run():
-  # Array of one and datatype int
-  print(np.ones((5,4), dtype = np.int_))
+  # Generate an array full of random numbers
+  print(np.random.random((5, 4))) # pass in a size tuple
 
 if __name__ == "__main__":
   test_run()

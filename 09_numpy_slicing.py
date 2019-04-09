@@ -1,4 +1,3 @@
-import time
 import numpy as np
 
 def test_run():

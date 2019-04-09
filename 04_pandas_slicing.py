@@ -1,6 +1,5 @@
 import os
 import pandas as pd
-import matplotlib.pyplot as plt
 
 def symbol_to_path(symbol, base_dir="data"):
   # Return CSV path given ticker symbol
@@ -25,31 +24,34 @@ def get_data(symbols, dates):
 
   return df
 
-def normalize_data(df):
-  return df / df.ix[0,:]
-
-def plot_data(df, title = "Stock prices"):
-  ax = df.plot(title = title, fontsize = 2)
-  ax.set_xlabel("Date")
-  ax.set_ylabel("Price")
-  plt.show()
-
-def plot_selected(df, columns, start_index, end_index):
-  plot_data(normalize_data(df.ix[start_index:end_index, columns]))
-
-def test_run():
-  # Define date range
-  start_date = "2018-01-01"
-  end_date = "2019-04-01"
-  dates = pd.date_range(start_date, end_date)
-
+def combine_several_data(show = False):
   symbols = ["BBRI.JK", "INDF.JK"]
+
+  start_date = "2018-01-01"
+  end_date = "2018-02-01"
+
+  dates = pd.date_range(start_date, end_date)
 
   df = get_data(symbols, dates)
 
-  plot_selected(df, ["BBRI.JK", "INDF.JK"], "2019-01-01", "2019-04-01")
+  if show:
+    print(df)
+
+  return df
+
+def run():
+  # combine_several_data(True)
+
+  df = combine_several_data()
+  # Slice by row range (dates) using DataFrame.ix[] selector
+  print(df.ix["2018-01-01":"2018-01-10"])
+
+  # Slice by column (symbols)
+  print(df["INDF.JK"])
+  print(df[["BBRI.JK", "INDF.JK"]])
+
+  # Slice by row and column
+  print(df.ix["2018-01-01":"2018-01-10", ["BBRI.JK", "INDF.JK"]])
 
 if __name__ == "__main__":
-  test_run()
-
-# https://query1.finance.yahoo.com/v7/finance/download/INDF.JK?period1=970419600&period2=1554742800&interval=1d&events=history&crumb=vKbLEmDIMzQ
+  run()

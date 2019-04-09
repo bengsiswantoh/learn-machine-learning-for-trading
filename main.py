@@ -27,7 +27,7 @@ def get_data(symbols, dates):
 
 def test_run():
   # Define date range
-  start_date = "2019-01-01"
+  start_date = "2018-01-01"
   end_date = "2019-04-01"
   dates = pd.date_range(start_date, end_date)
 
@@ -35,7 +35,17 @@ def test_run():
 
   df = get_data(symbols, dates)
 
-  print(df)
+  # Slice by row range (dates) using DataFrame.ix[] selector
+  # print(df.ix["2018-01-01":"2018-01-30"])
+
+  # Slice by column (symbols)
+  # print(df["INDF.JK"])
+  # print(df[["BBRI.JK", "INDF.JK"]])
+
+  # Slice by row and column
+  print(df.ix["2018-01-01":"2018-01-30", ["BBRI.JK", "INDF.JK"]])
 
 if __name__ == "__main__":
   test_run()
+
+# https://query1.finance.yahoo.com/v7/finance/download/INDF.JK?period1=970419600&period2=1554742800&interval=1d&events=history&crumb=vKbLEmDIMzQ

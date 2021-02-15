@@ -4,8 +4,18 @@ import matplotlib.pyplot as plt
 from helper import get_data
 
 
-def normalize_data(df):
-    return df / df.loc[0, :]
+def normalize_data(df, symbols, start_date):
+    start_values = {}
+    for s in symbols:
+        start_values[s] = df.loc[start_date, s]
+        print(start_values[s])
+
+    for date in df.index:
+        print(date)
+        for s in symbols:
+            df.loc[date, s] = df.loc[date, s] / start_values[s]
+
+    return df
 
 
 def plot_data(df, title="Stock prices"):
@@ -29,9 +39,12 @@ def run():
 
     df = get_data(symbols, dates)
 
-    df = filter_data(df, ["BBCA.JK", "BBRI.JK"], "2019-02-01", "2019-04-01")
+    start_date_filter = "2019-02-01"
+    df = filter_data(df, ["BBCA.JK", "BBRI.JK"],
+                     start_date_filter, "2019-04-01")
     plot_data(df)
-    # plot_data(normalize_data(df))
+    df = normalize_data(df, symbols, start_date_filter)
+    plot_data(df)
 
 
 if __name__ == "__main__":
